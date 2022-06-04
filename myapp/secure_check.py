@@ -1,7 +1,11 @@
 from myapp.user import User
 
+# from myapp.controllers import Auth
+
 ### Create a List of Dictionary
-users = [User(1,"Allen",123), User(2,"Jamal","mypass")]
+# users = Auth.getAll()
+# users = [user.json() for user in users_array]
+users = [User(1,"Allen",123),User(2,"Bob",123)]
 
 ### initiate username table to use in authenticate function when checking if the user
 ### is present in the Db or users list

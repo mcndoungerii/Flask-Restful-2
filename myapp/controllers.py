@@ -1,7 +1,7 @@
 from flask_jwt import jwt_required
 from flask_restful import Api,Resource
 from myapp import db
-from myapp.models import Puppy
+from myapp.models import Puppy,User
 
 class PuppyNames(Resource):
 
@@ -14,12 +14,15 @@ class PuppyNames(Resource):
             return None,404
 
     def post(self,name):
+
+        if len(name) == 1:
+            return {"message": f"Can't be a real name {name}"}, 400
         pup = Puppy(name)
 
         db.session.add(pup)
         db.session.commit()
 
-        return pup.json(), 201
+        return pup.repr(), 201
 
 
     def update(self,id,name):
@@ -49,6 +52,20 @@ class AllPuppies(Resource):
             return [pup.json() for pup in puppies]
         else:
             return None, 401
+
+class Auth(Resource):
+
+    def post(self,username,password):
+        self.username = username
+        self.password = password
+        user = User(username=username,password=password)
+        db.session.add(user)
+        db.session.commit()
+        return user.__str__(), 201
+
+    def getAll(self):
+        users = User.query.all()
+        return [u.json for u in users]
 
 
 
