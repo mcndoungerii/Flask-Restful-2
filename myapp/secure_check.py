@@ -1,5 +1,4 @@
-from urllib.parse import uses_relative
-from user import User
+from myapp.user import User
 
 ### Create a List of Dictionary
 users = [User(1,"Allen",123), User(2,"Jamal","mypass")]
