@@ -1,14 +1,15 @@
 from flask_jwt import jwt_required
-from myapp import db,rest,api
-from models import Puppy
+from flask_restful import Api,Resource
+from myapp import db
+from myapp.models import Puppy
 
-class PuppyNames(rest):
+class PuppyNames(Resource):
 
     def get(self,name):
         pup = Puppy.query.filter_by(name=name).first()
 
         if pup:
-            return pup.json()
+            return pup.__repr__()
         else:
             return None,404
 
@@ -18,7 +19,7 @@ class PuppyNames(rest):
         db.session.add(pup)
         db.session.commit()
 
-        return pup, 201
+        return pup.json(), 201
 
 
     def update(self,id,name):
@@ -39,7 +40,7 @@ class PuppyNames(rest):
         else:
             return None, 404
 
-class AllPuppies(rest):
+class AllPuppies(Resource):
     @jwt_required()
     def get(self):
         puppies = Puppy.query.all()
@@ -50,7 +51,5 @@ class AllPuppies(rest):
             return None, 401
 
 
-#### Configuring Flask Restful Api and it's resources
-api.add_resource(PuppyNames,'/puppy/<string:name>')
-api.add_resource(AllPuppies,'/puppies')
+
 

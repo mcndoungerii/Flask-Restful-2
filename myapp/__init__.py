@@ -4,7 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_jwt import JWT
-from flask_restful import Api,Resource
+
 
 from myapp.secure_check import authenticate,identity
 
@@ -26,10 +26,5 @@ Migrate(app,db)
 JWT(app,authenticate,identity)
 
 
-
-### Configuring Restful API
-
-rest = Resource()
-api = Api(app)
 
 

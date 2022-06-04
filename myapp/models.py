@@ -13,7 +13,7 @@ class Puppy(db.Model):
         return f"Puppy name is {self.name}"
 
     def json(self):
-        return {"id":self.id,"name":self.name}
+        return {"name":self.name}
 
 
 db.create_all()
